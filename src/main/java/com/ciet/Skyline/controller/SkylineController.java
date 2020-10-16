@@ -14,7 +14,8 @@ public class SkylineController {
     
     @GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s", RestHandler.getBTCDia());
+        BTC btc = RestHandler.getBTCDia();
+        return String.format("Hello %s", btc.data.base);
     }
     
     @PostMapping("/cadastro")

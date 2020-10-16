@@ -1,34 +1,15 @@
 package com.ciet.Skyline.model;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URL;
 
-/**
- *
- * @author Eduardo
- */
 public class RestHandler {
-    public static String getBTCDia(){
-       //https://api.coinbase.com/v2/prices/spot?currency=BRL
-       String output,json=""; 
+    public static BTC getBTCDia(){
        try{
-            URL url = new URL("https://api.coinbase.com/v2/prices/spot?currency=BRL");
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-
-            connection.setRequestMethod("GET");
-
-            if (connection.getResponseCode() != 200) {
-                System.out.print("HTTP error code : " + connection.getResponseCode());
-            }
-            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while ((output = br.readLine()) != null) { json+= output; }
-                
-            connection.disconnect();
-       }catch(Exception e){
-           e.printStackTrace();
-       }
-       return json;
+            ObjectMapper obj = new ObjectMapper();
+            BTC btcPrice = obj.readValue(new URL("https://api.coinbase.com/v2/prices/spot?currency=BRL"), BTC.class);
+            return btcPrice;
+       }catch(Exception e){ e.printStackTrace(); }
+       return null;
     }
 }
