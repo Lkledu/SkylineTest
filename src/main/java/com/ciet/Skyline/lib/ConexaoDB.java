@@ -1,6 +1,7 @@
 package com.ciet.Skyline.lib;
 import java.sql.*;
 
+//https://www.devmedia.com.br/classe-generica-para-conexao-com-postgresql-e-mysql/5492
 public class ConexaoDB {
 
     private String local;

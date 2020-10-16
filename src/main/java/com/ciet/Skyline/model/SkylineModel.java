@@ -14,7 +14,7 @@ public class SkylineModel {
         conn.disconnect();
     }
 
-    public void transferenciaSaldo(){
+    public void creditarSaldo(String cpf, double saldo){
         conn.connect();
 
 
