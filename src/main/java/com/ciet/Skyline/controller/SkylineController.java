@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SkylineController {
-    private SkylineModel model = new SkylineModel();
+    private final SkylineModel model = new SkylineModel();
     
     @GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -24,7 +24,7 @@ public class SkylineController {
         @RequestParam(value = "cpf", defaultValue = "00011122233") String cpf) {
         model.cadastroCliente(nome, cpf);
         
-        return String.format("Hello %s", RestHandler.getBTCDia());
+        return String.format("Cadastro");
     }
     
     @GetMapping("/creditar")
@@ -33,7 +33,7 @@ public class SkylineController {
         @RequestParam(value = "saldo", defaultValue = "0.0") double saldo) {
         model.creditarSaldo(cpf, saldo);
         
-        return String.format("Hello %s", RestHandler.getBTCDia());
+        return String.format("Creditar");
     }
     
     @GetMapping("/comprabtc")
@@ -42,7 +42,6 @@ public class SkylineController {
         @RequestParam(value = "valor", defaultValue = "0.0") double valor) {
         model.creditarSaldo(cpf, valor);
         
-        return String.format("Hello %s", RestHandler.getBTCDia());
+        return String.format("CompraBTC");
     }
-    
 }

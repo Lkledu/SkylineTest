@@ -13,39 +13,37 @@ public class ConexaoDB {
 	private String driverjdbc;
 
 	public ConexaoDB(String local, String port, String database, String user, String passwd) {
-        setStr_connection("jdbc:postgresql://"+ local +":" + port +"/"+ database);
-        setLocal(local);
-        setPasswd(passwd);
-        setUser(user);
-        setDriverjdbc("org.postgresql.Driver");
+            setStr_connection("jdbc:postgresql://"+ local +":" + port +"/"+ database);
+            setLocal(local);
+            setPasswd(passwd);
+            setUser(user);
+            setDriverjdbc("org.postgresql.Driver");
   	}
 
 	public void connect(){
-		try {
-			Class.forName(getDriverjdbc());
-			setConnection(DriverManager.getConnection(getStr_connection(), getUser(), getPasswd()));
-			setStatment(getConnection().createStatement());
-		}catch (Exception e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
+            try {
+                Class.forName(getDriverjdbc());
+                setConnection(DriverManager.getConnection(getStr_connection(), getUser(), getPasswd()));
+                setStatment(getConnection().createStatement());
+            }catch (Exception e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
 	}
 
 	public void disconnect(){
-		try {
-			getConnection().close();
-		}catch (SQLException ex) {
-			System.out.println(ex);
-			ex.printStackTrace();
-		}
+            try { getConnection().close(); }
+            catch (SQLException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
 	}
 
 	public ResultSet query(String query){
-		try {
-			return getStatment().executeQuery(query);
-		}catch (SQLException ex) {
-			ex.printStackTrace();
-			return null;
+		try { return getStatment().executeQuery(query); }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                    return null;
 		}
 	}
 
