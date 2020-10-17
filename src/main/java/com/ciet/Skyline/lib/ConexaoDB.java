@@ -12,19 +12,19 @@ public class ConexaoDB {
 	private String str_connection;
 	private String driverjdbc;
 
-	public ConexaoDB(String local, String port, String database, String user, String passwd) {
-            setStr_connection("jdbc:postgresql://"+ local +":" + port +"/"+ database);
-            setLocal(local);
-            setPasswd(passwd);
-            setUser(user);
-            setDriverjdbc("org.postgresql.Driver");
+	public ConexaoDB(String _local, String _port, String _database, String _user, String _passwd) {
+            this.setStr_connection("jdbc:postgresql://"+ local +":" + _port +"/"+ _database);
+            this.setLocal(_local);
+            this.setUser(_user);
+            this.setPasswd(_passwd);
+            this.setDriverjdbc("org.postgresql.Driver");
   	}
 
 	public void connect(){
             try {
-                Class.forName(getDriverjdbc());
-                setConnection(DriverManager.getConnection(getStr_connection(), getUser(), getPasswd()));
-                setStatment(getConnection().createStatement());
+                Class.forName(this.getDriverjdbc());
+                this.setConnection(DriverManager.getConnection(this.getStr_connection(), this.getUser(), this.getPasswd()));
+                this.setStatment(this.getConnection().createStatement());
             }catch (Exception e) {
                 System.out.println(e);
                 e.printStackTrace();
@@ -47,24 +47,24 @@ public class ConexaoDB {
 		}
 	}
 
-	public String getLocal() { return local; }
+	public String getLocal() { return this.local; }
 	public void setLocal(String local) { this.local = local; }
 
-	public String getUser() { return user; }
+	public String getUser() { return this.user; }
 	public void setUser(String user) { this.user = user; }
 
-	public String getPasswd() { return passwd; }
+	public String getPasswd() { return this.passwd; }
 	public void setPasswd(String passwd) { this.passwd = passwd; }
 
-	public Connection getConnection() { return connection; }
+	public Connection getConnection() { return this.connection; }
 	public void setConnection(Connection connection) { this.connection = connection; }
 
-	public Statement getStatment() { return statment; }
+	public Statement getStatment() { return this.statment; }
 	public void setStatment(Statement statment) { this.statment = statment; }
 
-	public String getStr_connection() { return str_connection; }
+	public String getStr_connection() { return this.str_connection; }
 	public void setStr_connection(String str_connection) { this.str_connection = str_connection; }
 
-	public String getDriverjdbc() { return driverjdbc; }
+	public String getDriverjdbc() { return this.driverjdbc; }
 	public void setDriverjdbc(String driverjdbc) { this.driverjdbc = driverjdbc; }
 }
