@@ -46,8 +46,8 @@ public class ConexaoDB {
 		try { 
                     return getStatment().executeUpdate(query);
                 }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
+                catch (SQLException e) {
+                    e.printStackTrace();
                     return 0;
 		}
 	}

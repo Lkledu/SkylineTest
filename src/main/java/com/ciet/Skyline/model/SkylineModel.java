@@ -26,8 +26,7 @@ public class SkylineModel {
         
         this.conn.connect();
         if(this.cpfNotExist(this.conn, cpf)){
-                
-            String query = "INSERT INTO Clientes VALUES('"+ nome +"','"+ cpf +"','0.0');";
+            String query = "INSERT INTO \"public\".\"Clientes\"(nome, cpf, saldo) VALUES('"+ nome +"','"+ cpf +"','0.0');";
             this.conn.update(query);
             response = true;
         }
