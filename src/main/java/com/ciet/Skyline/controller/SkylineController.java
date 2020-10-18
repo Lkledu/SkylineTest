@@ -5,6 +5,7 @@ import com.ciet.Skyline.model.RestHandler;
 import com.ciet.Skyline.model.SkylineModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,12 +23,11 @@ public class SkylineController {
     public String cadastro(
         @RequestParam(value = "nome", defaultValue = "nome") String nome,
         @RequestParam(value = "cpf", defaultValue = "00011122233") String cpf) {
-        model.cadastroCliente(nome, cpf);
         
-        return String.format("Cadastro");
+        return String.format("{\"wasCreated\":\""+ model.cadastroCliente(nome, cpf)+ "\"}");
     }
     
-    @GetMapping("/creditar")
+    @PutMapping("/creditar")
     public String creditar(
         @RequestParam(value = "cpf", defaultValue = "nome") String cpf,
         @RequestParam(value = "saldo", defaultValue = "0.0") double saldo) {

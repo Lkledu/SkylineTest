@@ -1,34 +1,38 @@
 package com.ciet.Skyline.model;
 
 import com.ciet.Skyline.lib.ConexaoDB;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SkylineModel {
 
-    private ConexaoDB conn = new ConexaoDB("localhost", "5432", "SkylineDB", "skyline_user", "12345");
+    //private ConexaoDB conn = new ConexaoDB("localhost", "5432", "SkylineDB", "skyline_user", "12345");
+    private ConexaoDB conn = new ConexaoDB();
     
-    private boolean cpfExist(String cpf){
+    private boolean cpfNotExist(ConexaoDB conn, String cpf){
         try {
-            this.conn.connect();
-            String query = "SELECT COUNT(*) FROM Clientes WHERE cpf ='"+ cpf +"';";
+            String query = "SELECT COUNT(*) FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet result = this.conn.query(query);
             while(result.next()){
                 return true;
             }
-            this.conn.disconnect();
         } catch (SQLException e) { e.printStackTrace(); }
-        
         return false;
     }
     
-    public void cadastroCliente(String nome, String cpf){
-        if(this.cpfExist(cpf)){
-            this.conn.connect();
+    public boolean cadastroCliente(String nome, String cpf){
+        boolean response = false;
+        
+        this.conn.connect();
+        if(this.cpfNotExist(this.conn, cpf)){
+                
             String query = "INSERT INTO Clientes VALUES('"+ nome +"','"+ cpf +"','0.0');";
-            this.conn.query(query);
+            this.conn.update(query);
+            response = true;
         }
         this.conn.disconnect();
+        return response;
     }
 
     public void creditarSaldo(String cpf, double saldo){
