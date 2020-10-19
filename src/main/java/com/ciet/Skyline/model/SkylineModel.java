@@ -14,9 +14,7 @@ public class SkylineModel {
         try {
             String query = "SELECT COUNT(*) FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet result = this.conn.query(query);
-            while(result.next()){
-                return true;
-            }
+            while(result.next()){ return true; }
             return false;
         } catch (SQLException e) { 
             e.printStackTrace();
@@ -38,18 +36,29 @@ public class SkylineModel {
     }
 
     public void creditarSaldo(String cpf, double saldo){
-        conn.connect();
-
-        String query = "UPDATE INTO \"public\".\"Clientes\" WHERE cpf='"+cpf+"';";
-
-        conn.disconnect();
+        this.conn.connect();
+        try{
+            double saldoAtual = 0.0;
+            String qSelec = "SELECT saldo FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
+            ResultSet result = this.conn.query(qSelec);
+            while(result.next()){ 
+                saldoAtual = result.getDouble("saldo");
+                saldo += saldoAtual;
+            }
+            String query = "UPDATE \"public\".\"Clientes\" SET saldo="+ saldo+" WHERE cpf='"+cpf+"';";
+            this.conn.update(query);
+        }catch(SQLException e){ e.printStackTrace(); }
+        this.conn.disconnect();
     }
 
-    public void compraBTC(){
+    public void compraBTC(String cpf, double valor){
         conn.connect();
-
-
-
+        try{
+            double saldoAtual = 0.0;
+            String qSelec = "SELECT saldo FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
+            ResultSet result = this.conn.query(qSelec);
+            while(result.next()){ saldoAtual = result.getDouble("saldo"); }
+        }catch(Exception e){ e.printStackTrace(); }
         conn.disconnect();
     }
 }

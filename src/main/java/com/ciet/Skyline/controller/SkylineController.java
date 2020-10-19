@@ -29,7 +29,7 @@ public class SkylineController {
     
     @PutMapping("/creditar")
     public String creditar(
-        @RequestParam(value = "cpf", defaultValue = "nome") String cpf,
+        @RequestParam(value = "cpf", defaultValue = "00011122233") String cpf,
         @RequestParam(value = "saldo", defaultValue = "0.0") double saldo) {
         model.creditarSaldo(cpf, saldo);
         
@@ -38,9 +38,9 @@ public class SkylineController {
     
     @GetMapping("/comprabtc")
     public String comprabtc(
-        @RequestParam(value = "cpf", defaultValue = "nome") String cpf,
+        @RequestParam(value = "cpf", defaultValue = "00011122233") String cpf,
         @RequestParam(value = "valor", defaultValue = "0.0") double valor) {
-        model.creditarSaldo(cpf, valor);
+        model.compraBTC(cpf, valor);
         
         return String.format("CompraBTC");
     }
