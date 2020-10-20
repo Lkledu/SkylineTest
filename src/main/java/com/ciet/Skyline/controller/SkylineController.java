@@ -36,7 +36,7 @@ public class SkylineController {
         return String.format("Creditar");
     }
     
-    @GetMapping("/comprabtc")
+    @PutMapping("/comprabtc")
     public String comprabtc(
         @RequestParam(value = "cpf", defaultValue = "00011122233") String cpf,
         @RequestParam(value = "valor", defaultValue = "0.0") double valor) {
