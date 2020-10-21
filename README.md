@@ -7,56 +7,43 @@ O seguinte projeto representa uma API ficticia para a compra de BitCoins.
 descrição: Permite cadastro de novo usuário com nome e cpf. A API retorna true caso o usuário seja criado com sucesso e false caso ocorra algum erro.
 retorno: {"wasCreated":"boolean"}
 exemplo:
-```{"wasCreated":"true"}```
+`{"wasCreated":"true"}`
 
 * **PUT - http://localhost:8080/creditar?cpf=11122233344&saldo=80000.00**
 descrição: Adiciona saldo em reais (R$) para a conta do cpf informado. A API retorna true caso o procedimento seja executado com sucesso e false caso ocorra algum erro.
 retorno: {"wasCredited":"boolean"}
 exemplo:
-```
-{"wasCredited":"true"}
-```
+`{"wasCredited":"true"}`
 
 * **PUT - http://localhost:8080/comprabtc?cpf=11122233344&valor=1.0**
 descrição: Caso o usuário possua saldo, permite a compra de BitCoins ao informar o cpf do usuário e valor desejado para compra. A API retorna true caso o procedimento seja executado com sucesso e false caso ocorra algum erro.
 retorno: {"wasBought":"boolean"}
 exemplo:
-```
-{"wasBought":"true"}
-```
+`{"wasBought":"true"}`
 
 * **GET - http://localhost:8080/getSaldoReal?cpf=11122233344**
 descrição: Retorna o saldo em reais (R$) da conta do cpf informado.
 retorno: {"saldoReal":"double"}
 exemplo:
-```
-{"saldoReal":"11338.984381999995"}
-```
+`{"saldoReal":"11338.984381999995"}`
 
 * **GET - http://localhost:8080/getSaldoBtc?cpf=11122233344**
 descrição: Retorna o saldo em bitcoins (BTC) da conta do cpf informado.
 retorno: {"saldoBtc":"double"}
 exemplo:
-```
-{"saldoBtc":"1.0"}
-```
+`{"saldoBtc":"1.0"}`
 
 * **GET - http://localhost:8080/valorTotalInvestido?cpf=11122233344**
 descrição: Retorna o valor total investido em reais (R$) até o momento pela conta do cpf informado.
 retorno: {"valorTotalInvestido":"double"}
 exemplo:
-```
-{"valorTotalInvestido":"0.0"}
-```
+`{"valorTotalInvestido":"0.0"}`
 
 * **GET - http://localhost:8080/lucroObtido?cpf=11122233344**
 descrição: Retorna o lucro obtido em reais (R$) até o momento para a conta do cpf informado. Utiliza o valor investido até o momento e o preço do bitcoin em reais do momento atual para realizar o calculo.
 retorno: {"lucroObtido":"double"}
 exemplo:
-
-```
-{"lucroObtido":"205239.160395"}
-```
+`{"lucroObtido":"205239.160395"}`
 
 * **GET - http://localhost:8080/historico?cpf=11122233344**
 descrição: 
