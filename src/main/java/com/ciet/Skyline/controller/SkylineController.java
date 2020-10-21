@@ -45,7 +45,23 @@ public class SkylineController {
     }
     
     @GetMapping("/getSaldoReal")
-    public String informacoes(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
-        return String.format("{\"saldoReal\":\""+model.getsaldoReal(cpf)+"\"}");
+    public String getsaldoReal(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
+        return String.format("{\"saldoReal\":\""+model.getSaldoReal(cpf)+"\"}");
+    }
+    
+    @GetMapping("/getSaldoBtc")
+    public String getsaldoBtc(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
+        return String.format("{\"saldoBtc\":\""+model.getSaldoBtc(cpf)+"\"}");
+    }
+    
+    
+    @GetMapping("/valorTotalInvestido")
+    public String valorTotalInvestido(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
+        return String.format("{\"valorTotalInvestido\":\""+model.valorTotalInvestido(cpf)+"\"}");
+    }
+    
+    @GetMapping("/lucroObtido")
+    public String lucroObtido(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
+        return String.format("{\"lucroObtido\":\""+model.lucroObtido(cpf)+"\"}");
     }
 }

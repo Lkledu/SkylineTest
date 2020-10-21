@@ -87,7 +87,7 @@ public class SkylineModel {
         return false;
     }
     
-    public double getsaldoReal(String cpf){
+    public double getSaldoReal(String cpf){
         double saldo = 0;
         
         try{
