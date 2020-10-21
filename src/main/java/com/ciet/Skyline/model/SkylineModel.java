@@ -91,6 +91,7 @@ public class SkylineModel {
         double saldo = 0;
         
         try{
+            this.conn.connect();
             String qSelec = "SELECT saldo_real FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet rs = this.conn.query(qSelec);
             while(rs.next()){
@@ -98,6 +99,7 @@ public class SkylineModel {
             }
         }catch(SQLException e){ e.printStackTrace(); }
         
+        this.conn.disconnect();
         return saldo;
     }
     
@@ -105,6 +107,7 @@ public class SkylineModel {
         double saldo = 0;
         
         try{
+            this.conn.connect();
             String qSelec = "SELECT saldo_btc FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet rs = this.conn.query(qSelec);
             while(rs.next()){
@@ -112,6 +115,7 @@ public class SkylineModel {
             }
         }catch(SQLException e){ e.printStackTrace(); }
         
+        this.conn.disconnect();
         return saldo;
     }
     
@@ -119,6 +123,7 @@ public class SkylineModel {
         double valor = 0;
         
         try{
+            this.conn.connect();
             String query = "SELECT SUM(valor_real) as valor_total FROM \"public\".\"Transacao\" WHERE id_cliente = (SELECT id FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"');";
             ResultSet rs = this.conn.query(query);
             while(rs.next()){
@@ -126,6 +131,7 @@ public class SkylineModel {
             }
         }catch(SQLException e){ e.printStackTrace(); }
         
+        this.conn.disconnect();
         return valor;
     }
     
@@ -135,6 +141,7 @@ public class SkylineModel {
         BTC btcPrice = RestHandler.getBTCDia();
         
         try{
+            this.conn.connect();
             String qSelec = "SELECT saldo_btc FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet rs = this.conn.query(qSelec);
             while(rs.next()){
@@ -143,6 +150,7 @@ public class SkylineModel {
             
         }catch(SQLException e){ e.printStackTrace(); }
         
+        this.conn.disconnect();
         return (btcPrice.data.amount * saldoBtc) - valorTotalInvestido(cpf);
     }
     
@@ -150,19 +158,26 @@ public class SkylineModel {
         Transacao[] transacao = new Transacao[5];
         ObjectMapper obj = new ObjectMapper();
         String transacaoString = "";
+        
         try{
+            this.conn.connect();
             String query = "SELECT * FROM \"public\".\"Transacao\" WHERE id_cliente = (SELECT id FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"') ORDER BY id DESC LIMIT 5;";
             ResultSet rs = this.conn.query(query);
-            for(int i= 0; i<5; i++){
-                rs.next();
+            int i=0;
+            while(rs.next()){
+                transacao[i] = new Transacao();
                 
-                transacao[i].id = rs.getInt("id");
-                transacao[i].idCliente = rs.getInt("id_cliente");
+                transacao[i].id = rs.getInt("id");;
+                transacao[i].idCliente = rs.getInt("id_cliente");;
                 transacao[i].valorReal = rs.getDouble("valor_real");
                 transacao[i].valorBtc = rs.getDouble("valor_btc");
+                
+                i++;
             }
             transacaoString = obj.writeValueAsString(transacao);
         }catch(Exception e){ e.printStackTrace();}
+        
+        this.conn.disconnect();
         return transacaoString;
     }
 }

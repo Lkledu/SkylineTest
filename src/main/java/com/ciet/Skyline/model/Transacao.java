@@ -1,8 +1,8 @@
 package com.ciet.Skyline.model;
 
 public class Transacao {
-    int id;
-    int idCliente;
-    double valorReal;
-    double valorBtc;
+    public int id;
+    public int idCliente;
+    public double valorReal;
+    public double valorBtc;
 }
