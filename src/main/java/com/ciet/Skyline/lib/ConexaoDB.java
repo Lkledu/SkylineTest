@@ -2,7 +2,7 @@ package com.ciet.Skyline.lib;
 import java.sql.*;
 
 //https://www.devmedia.com.br/classe-generica-para-conexao-com-postgresql-e-mysql/5492
-//alterei a classe pois retornava statment null sempre que ia executar query
+//alterei a classe pois retornava statment null sempre que ia executar query, também criei o método update
 public class ConexaoDB {
 
         public String local = "localhost";

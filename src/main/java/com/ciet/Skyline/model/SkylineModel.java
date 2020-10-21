@@ -1,6 +1,7 @@
 package com.ciet.Skyline.model;
 
 import com.ciet.Skyline.lib.ConexaoDB;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -146,14 +147,20 @@ public class SkylineModel {
         return (btcPrice.data.amount * saldoBtc) - valorTotalInvestido(cpf);
     }
     
-    public void historico(String cpf){
+    public String historico(String cpf){
+        Transacao transacao = new Transacao();
+        ObjectMapper obj = new ObjectMapper();
+        
         try{
             String query = "SELECT * FROM \"public\".\"Transacao\" WHERE cpf = '"+cpf+"' ORDER BY id DESC LIMIT 5;";
             ResultSet rs = this.conn.query(query);
             while(rs.next()){
-
+                transacao.id = rs.getInt("id");
+                transacao.idCliente = rs.getInt("id_cliente");
+                transacao.valorReal = rs.getDouble("valor_real");
+                transacao.valorBtc = rs.getDouble("valor_btc");
             }
         }catch(SQLException e){ e.printStackTrace();}
-        
+        return obj.writeValueAsString(transacao);
     }
 }
