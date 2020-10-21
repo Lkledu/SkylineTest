@@ -87,54 +87,73 @@ public class SkylineModel {
     }
     
     public double getsaldoReal(String cpf){
+        double saldo = 0;
+        
         try{
-            double saldo = 0;
             String qSelec = "SELECT saldo_real FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet rs = this.conn.query(qSelec);
             while(rs.next()){
                 saldo = rs.getDouble("saldo_real");
             }
-            return saldo;
         }catch(SQLException e){ e.printStackTrace(); }
         
-        return -1;
+        return saldo;
     }
     
     public double getSaldoBtc(String cpf){
+        double saldo = 0;
+        
         try{
-            double saldo = 0;
             String qSelec = "SELECT saldo_btc FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
             ResultSet rs = this.conn.query(qSelec);
             while(rs.next()){
                 saldo = rs.getDouble("saldo_btc");
             }
-            return saldo;
         }catch(SQLException e){ e.printStackTrace(); }
         
-        return -1;
+        return saldo;
     }
     
     public double valorTotalInvestido(String cpf){
+        double valor = 0;
+        
         try{
-            double valor = 0;
             String query = "SELECT SUM(valor_real) as valor_total FROM \"public\".\"Transacao\" WHERE cpf ='"+ cpf +"';";
             ResultSet rs = this.conn.query(query);
             while(rs.next()){
                 valor = rs.getDouble("valor_total");
             }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return -1;
+        }catch(SQLException e){ e.printStackTrace(); }
+        
+        return valor;
     }
     
     public double lucroObtido(String cpf){
-        try{
-            double lucro = 0;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        double lucro = 0;
+        double saldoBtc = 0;
+        BTC btcPrice = RestHandler.getBTCDia();
         
-        return -1;
+        try{
+            String qSelec = "SELECT saldo_btc FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"';";
+            ResultSet rs = this.conn.query(qSelec);
+            while(rs.next()){
+                saldoBtc = rs.getDouble("saldo_btc");
+            }
+            
+            
+        }catch(SQLException e){ e.printStackTrace(); }
+        
+        return (btcPrice.data.amount * saldoBtc) - valorTotalInvestido(cpf);
+    }
+    
+    public void historico(String cpf){
+        try{
+            String query = "SELECT * FROM \"public\".\"Transacao\" WHERE cpf = '"+cpf+"' ORDER BY id DESC LIMIT 5;";
+            ResultSet rs = this.conn.query(query);
+            while(rs.next()){
+
+            }
+        }catch(SQLException e){ e.printStackTrace();}
+        
     }
 }
