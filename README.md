@@ -1,6 +1,8 @@
 # Skyline Project
 Projeto realizado para processo seletivo com a Ci&T.
 O seguinte projeto representa uma API ficticia para a compra de BitCoins.
+Para o projeto foi utilizado a linguagem Java com o framework Spring-Boot e banco de dados PostgreSQL. Foi utilizado o software Postman para os testes com API durante desenvolvimento.
+
 
 ### Endpoints:
 * **POST - http://localhost:8080/cadastro?nome=eduardo&cpf=11122233345**  
