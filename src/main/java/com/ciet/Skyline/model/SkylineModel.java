@@ -150,7 +150,7 @@ public class SkylineModel {
     public String historico(String cpf){
         Transacao transacao = new Transacao();
         ObjectMapper obj = new ObjectMapper();
-        
+        String transacaoString = "";
         try{
             String query = "SELECT * FROM \"public\".\"Transacao\" WHERE cpf = '"+cpf+"' ORDER BY id DESC LIMIT 5;";
             ResultSet rs = this.conn.query(query);
@@ -160,7 +160,8 @@ public class SkylineModel {
                 transacao.valorReal = rs.getDouble("valor_real");
                 transacao.valorBtc = rs.getDouble("valor_btc");
             }
-        }catch(SQLException e){ e.printStackTrace();}
-        return obj.writeValueAsString(transacao);
+            transacaoString = obj.writeValueAsString(transacao);
+        }catch(Exception e){ e.printStackTrace();}
+        return transacaoString;
     }
 }
