@@ -115,7 +115,25 @@ public class SkylineModel {
     }
     
     public double valorTotalInvestido(String cpf){
-        
+        try{
+            double valor = 0;
+            String query = "SELECT SUM(valor_real) as valor_total FROM \"public\".\"Transacao\" WHERE cpf ='"+ cpf +"';";
+            ResultSet rs = this.conn.query(query);
+            while(rs.next()){
+                valor = rs.getDouble("valor_total");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    public double lucroObtido(String cpf){
+        try{
+            double lucro = 0;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
         return -1;
     }
