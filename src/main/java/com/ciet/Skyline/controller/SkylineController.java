@@ -64,4 +64,9 @@ public class SkylineController {
     public String lucroObtido(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
         return String.format("{\"lucroObtido\":\""+model.lucroObtido(cpf)+"\"}");
     }
+    
+    @GetMapping("/historico")
+    public String historico(@RequestParam(value = "cpf", defaultValue = "00011122233") String cpf){
+        return String.format("{\"historico\":\""+model.historico(cpf)+"\"}");
+    }
 }

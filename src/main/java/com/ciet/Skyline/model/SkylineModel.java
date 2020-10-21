@@ -31,7 +31,7 @@ public class SkylineModel {
         
         if(!this.cpfExist(cpf)){
             this.conn.connect();
-            String query = "INSERT INTO \"public\".\"Clientes\"(nome, cpf, saldo_real, saldo_btc) VALUES('"+ nome +"','"+ cpf +"','0.0', 0.0);";
+            String query = "INSERT INTO \"public\".\"Clientes\"(nome, cpf, saldo_real, saldo_btc) VALUES('"+ nome +"','"+ cpf +"',0.0, 0.0);";
             this.conn.update(query);
             response = true;
             this.conn.disconnect();
@@ -76,7 +76,7 @@ public class SkylineModel {
                     double novoSaldoBtc = saldoBtcAtual + valor;
                     
                     String queryu = "UPDATE \"public\".\"Clientes\" SET saldo_real="+ novoSaldoReal +", saldo_btc="+ novoSaldoBtc+" WHERE cpf='"+cpf+"';";
-                    String queryi = "INSERT INTO \"public\".\"Transacao\"(id_Cliente, valor_real, valor_btc) VALUES("+idCliente+","+precoBtcTotal+", "+valor+");";
+                    String queryi = "INSERT INTO \"public\".\"Transacao\"(id_Cliente, valor_real, valor_btc) VALUES('"+idCliente+"','"+precoBtcTotal+"', '"+valor+"');";
                     this.conn.update(queryu);
                     this.conn.update(queryi);
                     return true;    
@@ -119,7 +119,7 @@ public class SkylineModel {
         double valor = 0;
         
         try{
-            String query = "SELECT SUM(valor_real) as valor_total FROM \"public\".\"Transacao\" WHERE cpf ='"+ cpf +"';";
+            String query = "SELECT SUM(valor_real) as valor_total FROM \"public\".\"Transacao\" WHERE id_cliente = (SELECT id FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"');";
             ResultSet rs = this.conn.query(query);
             while(rs.next()){
                 valor = rs.getDouble("valor_total");
@@ -141,24 +141,25 @@ public class SkylineModel {
                 saldoBtc = rs.getDouble("saldo_btc");
             }
             
-            
         }catch(SQLException e){ e.printStackTrace(); }
         
         return (btcPrice.data.amount * saldoBtc) - valorTotalInvestido(cpf);
     }
     
     public String historico(String cpf){
-        Transacao transacao = new Transacao();
+        Transacao[] transacao = new Transacao[5];
         ObjectMapper obj = new ObjectMapper();
         String transacaoString = "";
         try{
-            String query = "SELECT * FROM \"public\".\"Transacao\" WHERE cpf = '"+cpf+"' ORDER BY id DESC LIMIT 5;";
+            String query = "SELECT * FROM \"public\".\"Transacao\" WHERE id_cliente = (SELECT id FROM \"public\".\"Clientes\" WHERE cpf ='"+ cpf +"') ORDER BY id DESC LIMIT 5;";
             ResultSet rs = this.conn.query(query);
-            while(rs.next()){
-                transacao.id = rs.getInt("id");
-                transacao.idCliente = rs.getInt("id_cliente");
-                transacao.valorReal = rs.getDouble("valor_real");
-                transacao.valorBtc = rs.getDouble("valor_btc");
+            for(int i= 0; i<5; i++){
+                rs.next();
+                
+                transacao[i].id = rs.getInt("id");
+                transacao[i].idCliente = rs.getInt("id_cliente");
+                transacao[i].valorReal = rs.getDouble("valor_real");
+                transacao[i].valorBtc = rs.getDouble("valor_btc");
             }
             transacaoString = obj.writeValueAsString(transacao);
         }catch(Exception e){ e.printStackTrace();}
